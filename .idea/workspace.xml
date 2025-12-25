@@ -4,23 +4,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/agent_design.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/debug_sanity_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/evaluate_all.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fix_and_gen_classes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/gpu_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/model_c.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_custom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_standard.py" afterDir="false" />
+    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="有点一坨的调整 现在调用C模型还是有问题">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/label.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fine_tune.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fine_tune_pro.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/init_models_labels.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/train_enhanced.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_a.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_a_classes.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_b.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_b_classes.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_c.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_c_finetuned.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models_备份/model_mnist.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/备份tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug_sanity_check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluate_all.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fix_and_gen_classes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_tools.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_custom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_standard.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,32 +81,48 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.debug_sanity_check.executor": "Run",
+    "Python.diagnose_accuracy.executor": "Run",
     "Python.evaluate_all (1).executor": "Run",
     "Python.evaluate_all.executor": "Run",
+    "Python.fine_tune.executor": "Run",
+    "Python.fine_tune_pro.executor": "Run",
     "Python.fix_and_gen_classes.executor": "Run",
     "Python.gpu_test.executor": "Run",
+    "Python.init_models_labels.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.model_mnist.pth.executor": "Run",
+    "Python.test_accuracy.executor": "Run",
+    "Python.test_dataset_c (1).executor": "Run",
+    "Python.test_dataset_c.executor": "Run",
+    "Python.test_global_all.executor": "Run",
+    "Python.test_recognition.executor": "Run",
     "Python.test_tools.executor": "Run",
+    "Python.tools.executor": "Run",
     "Python.train_custom.executor": "Run",
+    "Python.train_enhanced.executor": "Run",
     "Python.train_standard.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/homework/AI/agent_design/models"
+    "last_opened_file_path": "E:/homework/AI/agent_design"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\homework\AI\agent_design" />
+      <recent name="E:\homework\AI\agent_design\datasets" />
       <recent name="E:\homework\AI\agent_design\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\homework\AI\agent_design" />
       <recent name="E:\homework\AI\agent_design\models" />
       <recent name="E:\homework\AI\agent_design\model_train_tools" />
+      <recent name="E:\homework\AI\agent_design\model_train_tools\data_cache" />
+      <recent name="E:\homework\AI\agent_design\datasets" />
+      <recent name="E:\homework\AI\agent_design\datasets\dataset_B" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.evaluate_all (1)">
-    <configuration name="debug_sanity_check" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.test_accuracy">
+    <configuration name="diagnose_accuracy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -90,7 +135,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug_sanity_check.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/diagnose_accuracy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -99,29 +144,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="evaluate_all (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="agent_design" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/evaluate_all.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="evaluate_all" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="init_models_labels" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -134,7 +157,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="E:\homework\AI\agent_design\evaluate_all.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/init_models_labels.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,7 +166,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="fix_and_gen_classes" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,7 +179,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fix_and_gen_classes.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,7 +188,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_tools" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="model_mnist.pth" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="agent_design" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model_train_tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_accuracy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,7 +223,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_tools.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_accuracy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -189,11 +234,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.evaluate_all (1)" />
-        <item itemvalue="Python.fix_and_gen_classes" />
-        <item itemvalue="Python.debug_sanity_check" />
-        <item itemvalue="Python.test_tools" />
-        <item itemvalue="Python.evaluate_all" />
+        <item itemvalue="Python.test_accuracy" />
+        <item itemvalue="Python.init_models_labels" />
+        <item itemvalue="Python.model_mnist.pth" />
+        <item itemvalue="Python.diagnose_accuracy" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -212,6 +257,27 @@
       <option name="presentableId" value="Default" />
       <updated>1766472780998</updated>
     </task>
+    <task id="LOCAL-00001" summary="有点一坨的调整 现在调用C模型还是有问题">
+      <option name="closed" value="true" />
+      <created>1766651189385</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766651189385</updated>
+    </task>
+    <task id="LOCAL-00002" summary="有点一坨的调整 现在调用C模型还是有问题">
+      <option name="closed" value="true" />
+      <created>1766664567248</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1766664567248</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="有点一坨的调整 现在调用C模型还是有问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="有点一坨的调整 现在调用C模型还是有问题" />
   </component>
 </project>

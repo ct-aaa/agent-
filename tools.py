@@ -1,99 +1,129 @@
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
-from PIL import Image, ImageOps  # 引入 ImageOps 用于反色
+from PIL import Image
 import os
 
-# --- 全局配置 ---
+
+# === 1. 定义网络结构 (Dataset A - MNIST) ===
+class SimpleCNN(nn.Module):
+    def __init__(self):
+        super(SimpleCNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(64 * 7 * 7, 128)
+        self.fc2 = nn.Linear(128, 10)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = x.view(-1, 64 * 7 * 7)
+        x = self.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+
+# === 2. 模型缓存与加载 ===
+_MODELS = {}
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# 1. 模型文件配置
-config = {
-    "dataset_A": {"model": "model_a.pth", "classes": "model_a_classes.txt"},
-    "dataset_B": {"model": "model_b.pth", "classes": "model_b_classes.txt"},
-    "dataset_C": {"model": "model_c.pth", "classes": "model_c_classes.txt"}
-}
 
-# 2. 架构配置
-MODEL_ARCH_CONFIG = {
-    "dataset_A": "resnet18",
-    "dataset_B": "resnet18",
-    "dataset_C": "resnet50"
-}
-
-_MODEL_CACHE = {}
-
-# 3. 预处理
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-])
-
-
-def load_model_for_dataset(dataset_name):
-    if dataset_name in _MODEL_CACHE:
-        return _MODEL_CACHE[dataset_name]
-
-    if dataset_name not in config:
-        return None, []
-
-    info = config[dataset_name]
-    model_path = os.path.join("models", info["model"])
-    txt_path = os.path.join("models", info["classes"])
-
-    if not os.path.exists(model_path) or not os.path.exists(txt_path):
-        print(f"❌ 文件缺失: {model_path} 或 {txt_path}")
-        return None, []
+def get_model(dataset_name):
+    if dataset_name in _MODELS: return _MODELS[dataset_name]
 
     try:
-        # 读取类别
-        with open(txt_path, 'r', encoding='utf-8') as f:
-            classes = [line.strip() for line in f.readlines() if line.strip()]
+        if dataset_name == 'dataset_A':
+            print("📥 加载 MNIST 模型 (dataset_A)...")
+            model = SimpleCNN().to(device)
+            # 修复 Warning: 添加 weights_only=True
+            model.load_state_dict(torch.load("models/model_a.pth", map_location=device, weights_only=True))
+            model.eval()
+            _MODELS[dataset_name] = model
 
-        # 加载权重
-        checkpoint = torch.load(model_path, map_location=device, weights_only=False)
-        state_dict = checkpoint['state_dict'] if (
-                    isinstance(checkpoint, dict) and 'state_dict' in checkpoint) else checkpoint
+        elif dataset_name == 'dataset_B':
+            print("📥 加载 ResNet18 (dataset_B)...")
+            model = models.resnet18(weights='DEFAULT').to(device)
+            model.eval()
+            _MODELS[dataset_name] = model
 
-        # 清洗 Key
-        new_state_dict = {}
-        for k, v in state_dict.items():
-            name = k
-            if name.startswith('module.'): name = name[7:]
-            if name.startswith('Network.features.'): name = name.replace('Network.features.', '')
-            if name.startswith('Network.classifier.'): name = name.replace('Network.classifier.', 'fc.')
-            new_state_dict[name] = v
-
-        # 智能判断类别数
-        if 'fc.weight' in new_state_dict:
-            model_num_classes = new_state_dict['fc.weight'].shape[0]
-        else:
-            model_num_classes = len(classes)
-
-        # 初始化模型
-        arch = MODEL_ARCH_CONFIG.get(dataset_name, "resnet18")
-        if arch == "resnet50":
-            model = models.resnet50(weights=None)
-        else:
-            model = models.resnet18(weights=None)
-
-        model.fc = nn.Linear(model.fc.in_features, model_num_classes)
-        model.load_state_dict(new_state_dict)
-        model.to(device)
-        model.eval()
-
-        _MODEL_CACHE[dataset_name] = (model, classes)
-        return model, classes
+        elif dataset_name == 'dataset_C':
+            print("📥 加载 MobileNetV3 (dataset_C)...")
+            model = models.mobilenet_v3_small(weights='DEFAULT').to(device)
+            model.eval()
+            _MODELS[dataset_name] = model
 
     except Exception as e:
-        print(f"❌ 加载模型失败 {dataset_name}: {e}")
-        return None, []
+        print(f"❌ 模型加载失败: {e}")
+        return None
+
+    return _MODELS.get(dataset_name)
 
 
+# === 3. 核心分类函数 ===
+def classify_image(dataset_name, image_path):
+    model = get_model(dataset_name)
+    if not model: return "Error: Model not loaded"
+
+    try:
+        img = Image.open(image_path)
+
+        # 预处理
+        if dataset_name == 'dataset_A':
+            tf = transforms.Compose([
+                transforms.Grayscale(num_output_channels=1),
+                transforms.Resize((28, 28)),
+                transforms.ToTensor(),
+                transforms.Normalize((0.1307,), (0.3081,))
+            ])
+        else:
+            img = img.convert('RGB')
+            # Dataset C 反色处理 (如果需要)
+            # if dataset_name == 'dataset_C': img = ImageOps.invert(img)
+
+            tf = transforms.Compose([
+                transforms.Resize((224, 224)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            ])
+
+        img_t = tf(img).unsqueeze(0).to(device)
+
+        # 推理
+        with torch.no_grad():
+            out = model(img_t)
+            prob = torch.nn.functional.softmax(out[0], dim=0)
+            score, idx = torch.max(prob, 0)
+            class_id = idx.item()
+
+        # 映射类别 ID -> 名称
+        # 必须先运行 init_model_labels.py 生成这些 txt 文件
+        label_file = {
+            'dataset_A': 'models/model_a_classes.txt',
+            'dataset_B': 'models/model_b_classes.txt',
+            'dataset_C': 'models/model_c_classes.txt'
+        }.get(dataset_name)
+
+        predicted_label = str(class_id)  # 默认只返回 ID
+
+        if label_file and os.path.exists(label_file):
+            with open(label_file, 'r', encoding='utf-8') as f:
+                classes = [line.strip() for line in f.readlines()]
+                if class_id < len(classes):
+                    predicted_label = classes[class_id]
+
+        # 严格遵守接口定义：只返回类别字符串 (例如 "shark", "7")
+        return predicted_label
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+# === 4. 工具函数 ===
 def list_images(dataset_name):
     path = os.path.join("datasets", dataset_name)
-    if not os.path.exists(path): return f"Error: {path} not found"
+    if not os.path.exists(path): return []
     images = []
     for root, _, files in os.walk(path):
         for f in files:
@@ -102,42 +132,5 @@ def list_images(dataset_name):
     return images
 
 
-def classify_image(image_path):
-    if "dataset_A" in image_path:
-        ds = "dataset_A"
-    elif "dataset_B" in image_path:
-        ds = "dataset_B"
-    elif "dataset_C" in image_path:
-        ds = "dataset_C"
-    else:
-        return "Error: 路径中未包含 dataset_A/B/C"
-
-    model, classes = load_model_for_dataset(ds)
-    if not model: return "Error: 模型加载失败"
-
-    try:
-        img = Image.open(image_path).convert('RGB')
-
-        # # === 🚑 关键修复：针对 Dataset_C 的自动反色 ===
-        # if ds == "dataset_C":
-        #     # 简单采样判断亮度：如果左上角是白色的(255)，说明是白底黑线，需要反色
-        #     # 或者直接计算平均亮度
-        #     from torchvision.transforms.functional import to_tensor
-        #     if to_tensor(img).mean() > 0.5:
-        #         # print("Detected white background, inverting...")
-        #         img = ImageOps.invert(img)
-        # # ==========================================
-
-        img_t = transform(img).unsqueeze(0).to(device)
-
-        with torch.no_grad():
-            out = model(img_t)
-            prob = torch.nn.functional.softmax(out[0], dim=0)
-            score, idx = torch.max(prob, 0)
-
-            if idx.item() >= len(classes):
-                return f"Error: 索引越界"
-
-            return f"{classes[idx.item()]} ({score.item() * 100:.1f}%)"
-    except Exception as e:
-        return f"Error: {e}"
+def get_image_data(image_path):
+    return image_path
