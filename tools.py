@@ -5,22 +5,48 @@ from PIL import Image
 import os
 
 
-# === 1. 定义网络结构 (Dataset A - MNIST) ===
-class SimpleCNN(nn.Module):
+# === 1. 更新后的网络结构 (需与训练脚本一致) ===
+class BetterCNN(nn.Module):
     def __init__(self):
-        super(SimpleCNN, self).__init__()
+        super(BetterCNN, self).__init__()
+
+        # 第一层卷积块: Conv -> BatchNorm -> ReLU -> MaxPool
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
+        self.bn1 = nn.BatchNorm2d(32)  # 新增层
+
+        # 第二层卷积块
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.bn2 = nn.BatchNorm2d(64)  # 新增层
+
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(64 * 7 * 7, 128)
-        self.fc2 = nn.Linear(128, 10)
         self.relu = nn.ReLU()
 
+        # 全连接层
+        self.fc1 = nn.Linear(64 * 7 * 7, 128)
+        self.dropout = nn.Dropout(0.5)  # 新增层
+        self.fc2 = nn.Linear(128, 10)
+
     def forward(self, x):
-        x = self.pool(self.relu(self.conv1(x)))
-        x = self.pool(self.relu(self.conv2(x)))
+        # Block 1
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.pool(x)
+
+        # Block 2
+        x = self.conv2(x)
+        x = self.bn2(x)
+        x = self.relu(x)
+        x = self.pool(x)
+
+        # Flatten
         x = x.view(-1, 64 * 7 * 7)
-        x = self.relu(self.fc1(x))
+
+        # FC Block
+        x = self.fc1(x)
+        x = self.relu(x)
+        # 注意：推理时 model.eval() 会自动关闭 dropout，这里保留结构即可
+        x = self.dropout(x)
         x = self.fc2(x)
         return x
 
@@ -35,11 +61,12 @@ def get_model(dataset_name):
 
     try:
         if dataset_name == 'dataset_A':
-            print("📥 加载 MNIST 模型 (dataset_A)...")
-            model = SimpleCNN().to(device)
-            # 修复 Warning: 添加 weights_only=True
+            print("📥 加载 MNIST 优化版模型 (dataset_A)...")
+            # --- 修改点：实例化 BetterCNN ---
+            model = BetterCNN().to(device)
+            # 加载参数
             model.load_state_dict(torch.load("models/model_a.pth", map_location=device, weights_only=True))
-            model.eval()
+            model.eval()  # 关键！这会关闭 Dropout 和 BatchNorm 的训练模式
             _MODELS[dataset_name] = model
 
         elif dataset_name == 'dataset_B':
@@ -79,9 +106,6 @@ def classify_image(dataset_name, image_path):
             ])
         else:
             img = img.convert('RGB')
-            # Dataset C 反色处理 (如果需要)
-            # if dataset_name == 'dataset_C': img = ImageOps.invert(img)
-
             tf = transforms.Compose([
                 transforms.Resize((224, 224)),
                 transforms.ToTensor(),
@@ -98,14 +122,13 @@ def classify_image(dataset_name, image_path):
             class_id = idx.item()
 
         # 映射类别 ID -> 名称
-        # 必须先运行 init_model_labels.py 生成这些 txt 文件
         label_file = {
             'dataset_A': 'models/model_a_classes.txt',
             'dataset_B': 'models/model_b_classes.txt',
             'dataset_C': 'models/model_c_classes.txt'
         }.get(dataset_name)
 
-        predicted_label = str(class_id)  # 默认只返回 ID
+        predicted_label = str(class_id)
 
         if label_file and os.path.exists(label_file):
             with open(label_file, 'r', encoding='utf-8') as f:
@@ -113,7 +136,6 @@ def classify_image(dataset_name, image_path):
                 if class_id < len(classes):
                     predicted_label = classes[class_id]
 
-        # 严格遵守接口定义：只返回类别字符串 (例如 "shark", "7")
         return predicted_label
 
     except Exception as e:

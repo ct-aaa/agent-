@@ -4,58 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="有点一坨的调整 现在调用C模型还是有问题">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/11.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/13.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/14.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/15.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/17.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/18.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/19.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/20.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasets/dataset_C/label.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fine_tune.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fine_tune_pro.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/init_models_labels.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/train_enhanced.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_a.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_a_classes.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_b.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_b_classes.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_c.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_c_finetuned.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models_备份/model_mnist.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/备份tools.py" afterDir="false" />
+    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="现在的CNN分类效果不错">
+      <change afterPath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debug_sanity_check.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate_all.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix_and_gen_classes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_tools.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_accuracy.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_custom.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_standard.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager" show_ignored="true" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -235,8 +196,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.test_accuracy" />
-        <item itemvalue="Python.init_models_labels" />
         <item itemvalue="Python.model_mnist.pth" />
+        <item itemvalue="Python.init_models_labels" />
         <item itemvalue="Python.diagnose_accuracy" />
         <item itemvalue="Python.main" />
       </list>
@@ -273,11 +234,20 @@
       <option name="project" value="LOCAL" />
       <updated>1766664567248</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="现在的CNN分类效果不错">
+      <option name="closed" value="true" />
+      <created>1766678609708</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1766678609708</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="有点一坨的调整 现在调用C模型还是有问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="有点一坨的调整 现在调用C模型还是有问题" />
+    <MESSAGE value="现在的CNN分类效果不错" />
+    <option name="LAST_COMMIT_MESSAGE" value="现在的CNN分类效果不错" />
   </component>
 </project>

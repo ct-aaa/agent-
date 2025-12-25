@@ -121,5 +121,5 @@ def calculate_accuracy(dataset_name):
 if __name__ == "__main__":
     # 你可以在这里切换想测的数据集
     #calculate_accuracy("dataset_A")
-    #calculate_accuracy("dataset_B")
-    calculate_accuracy("dataset_C")
+    calculate_accuracy("dataset_B")
+    #calculate_accuracy("dataset_C")
