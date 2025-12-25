@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="现在的CNN分类效果不错">
-      <change afterPath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" afterDir="false" />
+    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="优化过的CNN">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models_备份/model_b.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models_备份/model_b_classes.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test_accuracy.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
     </list>
@@ -242,12 +242,21 @@
       <option name="project" value="LOCAL" />
       <updated>1766678609708</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="优化过的CNN">
+      <option name="closed" value="true" />
+      <created>1766679663888</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1766679663888</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="有点一坨的调整 现在调用C模型还是有问题" />
     <MESSAGE value="现在的CNN分类效果不错" />
-    <option name="LAST_COMMIT_MESSAGE" value="现在的CNN分类效果不错" />
+    <MESSAGE value="优化过的CNN" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化过的CNN" />
   </component>
 </project>
