@@ -1,154 +1,143 @@
-import os
 import torch
-from torchvision import transforms, models
-from PIL import Image
+import torch.nn as nn
+from torchvision import models, transforms
+from PIL import Image, ImageOps  # 引入 ImageOps 用于反色
+import os
 
 # --- 全局配置 ---
-# 检测是否有 GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODELS_DIR = "models"  # 模型存放的文件夹名称
 
-# 全局缓存：避免每次识别图片都重新读取硬盘加载模型，那会非常慢
-model_cache = {}
-class_cache = {}
+# 1. 模型文件配置
+config = {
+    "dataset_A": {"model": "model_a.pth", "classes": "model_a_classes.txt"},
+    "dataset_B": {"model": "model_b.pth", "classes": "model_b_classes.txt"},
+    "dataset_C": {"model": "model_c.pth", "classes": "model_c_classes.txt"}
+}
 
-# 预处理：必须与训练时(train_custom.py)保持完全一致
+# 2. 架构配置
+MODEL_ARCH_CONFIG = {
+    "dataset_A": "resnet18",
+    "dataset_B": "resnet18",
+    "dataset_C": "resnet50"
+}
+
+_MODEL_CACHE = {}
+
+# 3. 预处理
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
 
 def load_model_for_dataset(dataset_name):
-    """
-    核心函数：根据数据集名称加载对应的模型和类别表
-    """
-    # 如果缓存里已经有这个模型了，直接返回，不用重新加载
-    if dataset_name in model_cache:
-        return model_cache[dataset_name], class_cache[dataset_name]
-
-    # 定义文件名映射关系 (请确保你的文件名和这里一致)
-    config = {
-        "dataset_A": {"model": "model_a.pth", "classes": "model_a_classes.txt"},
-        "dataset_B": {"model": "model_b.pth", "classes": "model_b_classes.txt"},
-        "dataset_C": {"model": "model_c.pth", "classes": "model_c_classes.txt"}
-    }
+    if dataset_name in _MODEL_CACHE:
+        return _MODEL_CACHE[dataset_name]
 
     if dataset_name not in config:
-        print(f"Error: 未知的数据集名称 {dataset_name}")
-        return None, None
+        return None, []
 
-    # 构建完整路径
-    model_path = os.path.join(MODELS_DIR, config[dataset_name]["model"])
-    class_path = os.path.join(MODELS_DIR, config[dataset_name]["classes"])
+    info = config[dataset_name]
+    model_path = os.path.join("models", info["model"])
+    txt_path = os.path.join("models", info["classes"])
 
-    # 检查文件是否存在
-    if not os.path.exists(model_path) or not os.path.exists(class_path):
-        print(f"Error: 找不到模型或类别文件 -> {model_path} 或 {class_path}")
-        return None, None
+    if not os.path.exists(model_path) or not os.path.exists(txt_path):
+        print(f"❌ 文件缺失: {model_path} 或 {txt_path}")
+        return None, []
 
-    print(f"正在加载模型: {dataset_name} ...")
-
-    # 1. 读取类别文件
-    with open(class_path, "r", encoding="utf-8") as f:
-        class_names = [line.strip() for line in f.readlines() if line.strip()]
-
-    # 2. 初始化模型结构 (ResNet18)
     try:
-        model = models.resnet18(weights=None)
-        # 修改全连接层，使其输出节点数等于我们的类别数
-        model.fc = torch.nn.Linear(model.fc.in_features, len(class_names))
+        # 读取类别
+        with open(txt_path, 'r', encoding='utf-8') as f:
+            classes = [line.strip() for line in f.readlines() if line.strip()]
 
-        # 加载训练好的权重
-        model.load_state_dict(torch.load(model_path, map_location=device, weights_only=False))
+        # 加载权重
+        checkpoint = torch.load(model_path, map_location=device, weights_only=False)
+        state_dict = checkpoint['state_dict'] if (
+                    isinstance(checkpoint, dict) and 'state_dict' in checkpoint) else checkpoint
 
-        # 转移到 GPU/CPU 并开启评估模式
+        # 清洗 Key
+        new_state_dict = {}
+        for k, v in state_dict.items():
+            name = k
+            if name.startswith('module.'): name = name[7:]
+            if name.startswith('Network.features.'): name = name.replace('Network.features.', '')
+            if name.startswith('Network.classifier.'): name = name.replace('Network.classifier.', 'fc.')
+            new_state_dict[name] = v
+
+        # 智能判断类别数
+        if 'fc.weight' in new_state_dict:
+            model_num_classes = new_state_dict['fc.weight'].shape[0]
+        else:
+            model_num_classes = len(classes)
+
+        # 初始化模型
+        arch = MODEL_ARCH_CONFIG.get(dataset_name, "resnet18")
+        if arch == "resnet50":
+            model = models.resnet50(weights=None)
+        else:
+            model = models.resnet18(weights=None)
+
+        model.fc = nn.Linear(model.fc.in_features, model_num_classes)
+        model.load_state_dict(new_state_dict)
         model.to(device)
         model.eval()
 
-        # 存入缓存
-        model_cache[dataset_name] = model
-        class_cache[dataset_name] = class_names
-
-        return model, class_names
+        _MODEL_CACHE[dataset_name] = (model, classes)
+        return model, classes
 
     except Exception as e:
-        print(f"Error: 加载模型失败 {e}")
-        return None, None
+        print(f"❌ 加载模型失败 {dataset_name}: {e}")
+        return None, []
 
 
-def list_images(dataset_name: str):
-    """
-    列出指定数据集的所有图片路径。
-    """
-    base_path = os.path.join("datasets", dataset_name)
-    if not os.path.exists(base_path):
-        return f"Error: 文件夹 {dataset_name} 不存在。"
-
-    # 这里我们要确保返回的是完整的相对路径，例如 'datasets/dataset_B/1.png'
-    # 这样后续 classify_image 才能直接读取
+def list_images(dataset_name):
+    path = os.path.join("datasets", dataset_name)
+    if not os.path.exists(path): return f"Error: {path} not found"
     images = []
-    for f in os.listdir(base_path):
-        if f.lower().endswith(('.png', '.jpg', '.jpeg')):
-            full_path = os.path.join("datasets", dataset_name, f)
-            images.append(full_path)
-
-    # 按文件名数字大小排序 (可选，方便人类阅读)
-    # images.sort()
-
+    for root, _, files in os.walk(path):
+        for f in files:
+            if f.lower().endswith(('.png', '.jpg', '.jpeg')):
+                images.append(os.path.join(root, f).replace('\\', '/'))
     return images
 
 
-def classify_image(image_path: str):
-    """
-    对单张图片进行分类。
-    """
-    # 1. 检查文件是否存在
-    if not os.path.exists(image_path):
-        return f"Error: 图片文件不存在 {image_path}"
-
-    # 2. 从路径中推断它是哪个数据集 (A, B 或 C)
-    # Windows 路径可能是 datasets\dataset_B\1.png，也可能是 /
-    normalized_path = image_path.replace("\\", "/")
-
-    if "dataset_A" in normalized_path:
-        ds_name = "dataset_A"
-    elif "dataset_B" in normalized_path:
-        ds_name = "dataset_B"
-    elif "dataset_C" in normalized_path:
-        ds_name = "dataset_C"
+def classify_image(image_path):
+    if "dataset_A" in image_path:
+        ds = "dataset_A"
+    elif "dataset_B" in image_path:
+        ds = "dataset_B"
+    elif "dataset_C" in image_path:
+        ds = "dataset_C"
     else:
-        return "Error: 无法从路径判断数据集来源 (文件名需包含 dataset_A/B/C)"
+        return "Error: 路径中未包含 dataset_A/B/C"
 
-    # 3. 获取模型和类别表
-    model, class_names = load_model_for_dataset(ds_name)
-    if model is None:
-        return f"Error: 模型 {ds_name} 加载失败"
+    model, classes = load_model_for_dataset(ds)
+    if not model: return "Error: 模型加载失败"
 
-    # 4. 图片预处理与推理
     try:
-        # 打开图片并转为 RGB (防止有灰度图或 RGBA 图报错)
         img = Image.open(image_path).convert('RGB')
-        # 增加 Batch 维度: [3, 224, 224] -> [1, 3, 224, 224]
-        input_tensor = transform(img).unsqueeze(0).to(device)
 
-        # 关掉梯度计算，节省内存
+        # # === 🚑 关键修复：针对 Dataset_C 的自动反色 ===
+        # if ds == "dataset_C":
+        #     # 简单采样判断亮度：如果左上角是白色的(255)，说明是白底黑线，需要反色
+        #     # 或者直接计算平均亮度
+        #     from torchvision.transforms.functional import to_tensor
+        #     if to_tensor(img).mean() > 0.5:
+        #         # print("Detected white background, inverting...")
+        #         img = ImageOps.invert(img)
+        # # ==========================================
+
+        img_t = transform(img).unsqueeze(0).to(device)
+
         with torch.no_grad():
-            outputs = model(input_tensor)
-            # 获取概率最大的那个类别的索引
-            _, predicted_idx = torch.max(outputs, 1)
+            out = model(img_t)
+            prob = torch.nn.functional.softmax(out[0], dim=0)
+            score, idx = torch.max(prob, 0)
 
-        # 将索引转换为文字标签
-        predicted_label = class_names[predicted_idx.item()]
-        return predicted_label
+            if idx.item() >= len(classes):
+                return f"Error: 索引越界"
 
+            return f"{classes[idx.item()]} ({score.item() * 100:.1f}%)"
     except Exception as e:
-        return f"Error: 识别过程出错 {e}"
-
-
-def get_image_data(image_path: str):
-    """
-    获取指定路径的图片，用于最终显示。
-    """
-    return f"Image Displayed: {image_path}"
+        return f"Error: {e}"
