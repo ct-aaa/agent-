@@ -44,7 +44,7 @@ class CustomDataset(Dataset):
         print(f"检测到 {len(self.classes)} 个类别: {self.classes}")
 
         # 保存类别到文件，供 tools.py 使用
-        if not os.path.exists("models"): os.makedirs("models")
+        if not os.path.exists("pre_train"): os.makedirs("pre_train")
         with open(CLASS_SAVE_PATH, 'w', encoding='utf-8') as f:
             for cls in self.classes:
                 f.write(f"{cls}\n")

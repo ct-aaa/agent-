@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 
 
-# === 1. 这里的 BetterCNN 仅用于 Dataset A (MNIST) ===
+# === 1. MNIST 网络结构 (Dataset A) ===
 class BetterCNN(nn.Module):
     def __init__(self):
         super(BetterCNN, self).__init__()
@@ -28,160 +28,180 @@ class BetterCNN(nn.Module):
         return x
 
 
-# === 2. 模型缓存 ===
+# === 2. 模型加载器 (单例模式) ===
 _MODELS = {}
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def get_model(dataset_name):
-    if dataset_name in _MODELS: return _MODELS[dataset_name]
+def get_model(dataset_key):
+    if dataset_key in _MODELS: return _MODELS[dataset_key]
 
     try:
-        if dataset_name == 'dataset_A':
-            print("📥 加载 MNIST 模型 (dataset_A)...")
+        # --- 加载 MNIST ---
+        if dataset_key == 'dataset_A':
             model = BetterCNN().to(device)
-            # 确保 weights_only=True 以避免警告
             if os.path.exists("models/model_a.pth"):
                 model.load_state_dict(torch.load("models/model_a.pth", map_location=device, weights_only=True))
-            else:
-                print("⚠️ 警告: models/model_a.pth 不存在，请先训练 Model A")
             model.eval()
-            _MODELS[dataset_name] = model
+            _MODELS[dataset_key] = model
 
-        elif dataset_name == 'dataset_B':
-
-            print("📥 正在加载本地缓存的 CIFAR-10 模型 (离线模式)...")
-
-            # 1. 设置你的本地缓存路径 (根据你的报错截图提取的路径)
-
-            # 使用 r"" 防止反斜杠转义问题
-
-            hub_dir = r"C:\Users\admin\.cache\torch\hub\chenyaofo_pytorch-cifar-models_master"
-
-            if not os.path.exists(hub_dir):
-                print(f"❌ 错误: 找不到本地缓存目录: {hub_dir}")
-                print("请先用联网模式运行一次，或检查路径是否正确。")
-                return None
-
+        # --- 加载 CIFAR-10 ---
+        elif dataset_key == 'dataset_B':
             try:
+                hub_dir = r"C:\Users\admin\.cache\torch\hub\chenyaofo_pytorch-cifar-models_master"
+                if os.path.exists(hub_dir):
+                    model = torch.hub.load(hub_dir, "cifar10_resnet20", pretrained=True, source='local')
+                else:
+                    model = torch.hub.load("chenyaofo/pytorch-cifar-pre_train", "cifar10_resnet20", pretrained=True)
+            except:
+                # 兜底：直接下载
+                model = torch.hub.load("chenyaofo/pytorch-cifar-pre_train", "cifar10_resnet20", pretrained=True)
 
-                # 2. 核心修改: source='local'
-                # 这告诉 PyTorch 不要去 GitHub 查更新，直接用硬盘里的文件
-                model = torch.hub.load(hub_dir, "cifar10_resnet20", pretrained=True, source='local')
-                model = model.to(device)
-                model.eval()
-                _MODELS[dataset_name] = model
-                print("✅ 模型加载成功 (Local)")
-
-
-            except Exception as e:
-                print(f"❌ 本地加载失败: {e}")
-                print("尝试检查 cache 文件夹里是否有 hubconf.py 文件")
-                return None
-
-        elif dataset_name == 'dataset_C':
-            print("📥 加载 MobileNetV3 (dataset_C)...")
-            model = models.mobilenet_v3_small(weights='DEFAULT').to(device)
+            model = model.to(device)
             model.eval()
-            _MODELS[dataset_name] = model
+            _MODELS[dataset_key] = model
+
+        # --- 加载 Dataset C (素描) ---
+        elif dataset_key == 'dataset_C':
+            # 优先加载最强模型
+            pth_file = "models/best_model_trained_on_TU_tested_on_C.pth"
+            if not os.path.exists(pth_file):
+                pth_file = "models/best_model_dataset_c.pth"
+
+            # 读取类别数
+            num_classes = 20
+            if os.path.exists("models/classes_c.txt"):
+                with open("models/classes_c.txt", 'r', encoding='utf-8') as f:
+                    num_classes = len([l for l in f.readlines() if l.strip()])
+
+            model = models.resnet50(weights=None)
+            model.fc = nn.Linear(model.fc.in_features, num_classes)
+
+            if os.path.exists(pth_file):
+                ckpt = torch.load(pth_file, map_location=device, weights_only=False)
+                # 处理 state_dict 嵌套
+                sd = ckpt['state_dict'] if (isinstance(ckpt, dict) and 'state_dict' in ckpt) else ckpt
+                model.load_state_dict(sd, strict=False)
+
+            model.to(device)
+            model.eval()
+            _MODELS[dataset_key] = model
 
     except Exception as e:
-        print(f"❌ 模型加载失败: {e}")
+        print(f"❌ 模型 {dataset_key} 加载失败: {e}")
         return None
+    return _MODELS.get(dataset_key)
 
-    return _MODELS.get(dataset_name)
 
+# === 3. 核心工具: 图片分类 (含数据绑定) ===
+def classify_image(image_path):
+    """
+    只需提供图片路径，自动判断数据集并调用对应模型。
+    返回格式: "[文件名] 的识别结果是: 类别" (防止 LLM 看错行)
+    """
+    # 路径标准化
+    path_str = image_path.replace('\\', '/')
+    filename = os.path.basename(path_str)  # 提取文件名 "1.png"
 
-# === 3. 核心分类函数 ===
-def classify_image(dataset_name, image_path):
-    model = get_model(dataset_name)
-    if not model: return "Error: Model not loaded"
+    # 1. 自动路由
+    if 'dataset_A' in path_str:
+        key = 'dataset_A'
+    elif 'dataset_B' in path_str:
+        key = 'dataset_B'
+    elif 'dataset_C' in path_str:
+        key = 'dataset_C'
+    else:
+        return f"Error: 无法识别数据集来源 {filename}"
+
+    model = get_model(key)
+    if not model: return f"Error: 模型初始化失败 {filename}"
 
     try:
         img = Image.open(image_path)
 
-        # === 针对不同数据集使用不同的预处理 ===
-        if dataset_name == 'dataset_A':
-            # MNIST: 28x28, 灰度
+        # 2. 针对性预处理 (特别是 Dataset C 的视觉增强)
+        if key == 'dataset_A':
             tf = transforms.Compose([
-                transforms.Grayscale(num_output_channels=1),
-                transforms.Resize((28, 28)),
-                transforms.ToTensor(),
-                transforms.Normalize((0.1307,), (0.3081,))
+                transforms.Grayscale(1), transforms.Resize((28, 28)),
+                transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))
             ])
-        elif dataset_name == 'dataset_B':
-            # CIFAR-10: 32x32, RGB, 标准化参数不同
+        elif key == 'dataset_B':
             img = img.convert('RGB')
             tf = transforms.Compose([
-                transforms.Resize((32, 32)),  # 关键：CIFAR 模型需要 32x32
-                transforms.ToTensor(),
+                transforms.Resize((32, 32)), transforms.ToTensor(),
                 transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])
             ])
-        else:
-            # Dataset C (ImageNet): 224x224
+        else:  # Dataset C (关键：必须反转+二值化)
             img = img.convert('RGB')
+            img = ImageOps.invert(img)  # 反转
+            fn = lambda x: 255 if x > 50 else 0
+            img = img.convert('L').point(fn, mode='1').convert('RGB')  # 二值化
+
             tf = transforms.Compose([
-                transforms.Resize((224, 224)),
+                transforms.Resize(240), transforms.CenterCrop(224),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
             ])
 
         img_t = tf(img).unsqueeze(0).to(device)
 
-        # 推理
+        # 3. 推理
         with torch.no_grad():
             out = model(img_t)
-            prob = torch.nn.functional.softmax(out[0], dim=0)
-            score, idx = torch.max(prob, 0)
-            class_id = idx.item()
+            idx = torch.max(out, 1)[1].item()
 
-        # === 结果映射 ===
-        predicted_label = str(class_id)
-
-        if dataset_name == 'dataset_B':
-            # CIFAR-10 的类别是固定的，我们直接硬编码，不需要读 txt 文件
-            # 这样更稳健
-            cifar_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-            if class_id < len(cifar_classes):
-                raw_label = cifar_classes[class_id]
-                # 兼容性处理：把 standard label 转换成你 label.txt 里的叫法
-                # 你的 label.txt 用的是 "car", "plane"
-                if raw_label == 'automobile':
-                    predicted_label = 'car'
-                elif raw_label == 'airplane':
-                    predicted_label = 'plane'
-                else:
-                    predicted_label = raw_label
+        # 4. 标签解码
+        if key == 'dataset_B':
+            classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+            lbl = classes[idx]
+            if lbl == 'automobile': lbl = 'car'
+            if lbl == 'airplane': lbl = 'plane'
         else:
-            # 其他模型继续读取 txt
-            label_file = {
-                'dataset_A': 'models/model_a_classes.txt',
-                'dataset_C': 'models/model_c_classes.txt'
-            }.get(dataset_name)
+            txt = "models/model_a_classes.txt" if key == 'dataset_A' else "models/classes_c.txt"
+            if os.path.exists(txt):
+                with open(txt, 'r', encoding='utf-8') as f:
+                    cls = [x.strip() for x in f.readlines() if x.strip()]
+                lbl = cls[idx] if idx < len(cls) else str(idx)
+            else:
+                lbl = str(idx)
 
-            if label_file and os.path.exists(label_file):
-                with open(label_file, 'r', encoding='utf-8') as f:
-                    classes = [line.strip() for line in f.readlines()]
-                    if class_id < len(classes):
-                        predicted_label = classes[class_id]
-
-        return predicted_label
+        # ⚠️ 关键修改：把文件名和结果绑定在一起返回
+        return f"[{filename}] 的识别结果是: {lbl}"
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"Error processing {filename}: {e}"
 
 
-# === 4. 工具函数 ===
+# === 4. 工具: 列出图片 (含排序) ===
 def list_images(dataset_name):
     path = os.path.join("datasets", dataset_name)
     if not os.path.exists(path): return []
-    images = []
-    for root, _, files in os.walk(path):
-        for f in files:
+    res = []
+    for r, _, fs in os.walk(path):
+        for f in fs:
             if f.lower().endswith(('.png', '.jpg', '.jpeg')):
-                images.append(os.path.join(root, f).replace('\\', '/'))
-    return images
+                res.append(os.path.join(r, f).replace('\\', '/'))
+    # ⚠️ 关键修改：强制排序，保证 Agent 每次看到的顺序一致
+    res.sort()
+    return res
 
 
-def get_image_data(image_path):
-    return image_path
+# === 5. 工具: 计算器 (升级版：支持比较大小) ===
+def calculate(expression):
+    """
+    参数: expression (str), 例如 "1+2+3", "12 > 8" 或 "10 % 3"
+    功能: 精确计算数学表达式的结果，支持取模运算
+    """
+    try:
+        # 允许数字、运算符号 (+-*/)、括号、比较符号 (><=) 以及 取模 (%)
+        allowed = set("0123456789+-*/(). ><=%")
+
+        # 检查是否包含非法字符
+        if not all(c in allowed for c in expression):
+            return "Error: 包含非法字符，拒绝计算"
+
+        # 使用 eval 进行计算 (eval 本身支持 % 运算)
+        result = eval(expression)
+        return str(result)
+    except Exception as e:
+        return f"Error: 计算出错 {e}"

@@ -4,10 +4,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="优化过的CNN">
+    <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="使用LFS 完整上传模型文件">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/model_C_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/model_c.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/pkl_depacke.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/pre_train/model_best_TUBerlin.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model_train_tools/test_tools/test_keys.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/best_model_trained_on_TU_tested_on_C.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/classes_c.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model_a.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/agent_design.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/agent_design.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/18.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/19.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/20.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/label.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fine_tune.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fine_tune_pro.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_tools/gpu_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/test_tools/gpu_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_a_mnist.pth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_tools/train_enhanced.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models_备份/model_a.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models_备份/model_a_classes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_a_classes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models_备份/model_b.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models_备份/model_b_classes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models_备份/model_c.pth" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test_accuracy.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
     </list>
@@ -16,7 +58,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" show_ignored="true" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -27,6 +68,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ct-aaa"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ct-aaa/agent-.git",
+    "accountId": "ee633822-72e0-47b4-b78e-f3c87012a80a"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -38,74 +91,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.debug_sanity_check.executor": "Run",
-    "Python.diagnose_accuracy.executor": "Run",
-    "Python.evaluate_all (1).executor": "Run",
-    "Python.evaluate_all.executor": "Run",
-    "Python.fine_tune.executor": "Run",
-    "Python.fine_tune_pro.executor": "Run",
-    "Python.fix_and_gen_classes.executor": "Run",
-    "Python.gpu_test.executor": "Run",
-    "Python.init_models_labels.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.model_mnist.pth.executor": "Run",
-    "Python.test_accuracy.executor": "Run",
-    "Python.test_dataset_c (1).executor": "Run",
-    "Python.test_dataset_c.executor": "Run",
-    "Python.test_global_all.executor": "Run",
-    "Python.test_recognition.executor": "Run",
-    "Python.test_tools.executor": "Run",
-    "Python.tools.executor": "Run",
-    "Python.train_custom.executor": "Run",
-    "Python.train_enhanced.executor": "Run",
-    "Python.train_standard.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/homework/AI/agent_design"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.augment_data.executor&quot;: &quot;Run&quot;,
+    &quot;Python.check_keys.executor&quot;: &quot;Run&quot;,
+    &quot;Python.debug_sanity_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python.diagnose_accuracy.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_all (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_all.executor&quot;: &quot;Run&quot;,
+    &quot;Python.final_exam.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fine_tune.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fine_tune_pro.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fix_and_gen_classes.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gpu_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.init_models_labels.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_C_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_c.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_mnist.pth.executor&quot;: &quot;Run&quot;,
+    &quot;Python.pkl_depackeg.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_accuracy.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_dataset_c (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_dataset_c.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_global_all.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_pretrain_power.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_recognition.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_tools.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tools.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_custom.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_enhanced.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_sketch_model.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_standard.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_tu_validate_c.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_tuberlin_transfer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/homework/AI/agent_design/datasets&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\homework\AI\agent_design" />
       <recent name="E:\homework\AI\agent_design\datasets" />
+      <recent name="E:\homework\AI\agent_design\model_train_tools\pre_train" />
+      <recent name="E:\homework\AI\agent_design" />
       <recent name="E:\homework\AI\agent_design\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\homework\AI\agent_design\models" />
+      <recent name="E:\homework\AI\agent_design\model_train_tools\test_tools" />
       <recent name="E:\homework\AI\agent_design\model_train_tools" />
-      <recent name="E:\homework\AI\agent_design\model_train_tools\data_cache" />
       <recent name="E:\homework\AI\agent_design\datasets" />
-      <recent name="E:\homework\AI\agent_design\datasets\dataset_B" />
+      <recent name="E:\homework\AI\agent_design\models" />
+      <recent name="E:\homework\AI\agent_design\model_train_tools\data_cache" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test_accuracy">
-    <configuration name="diagnose_accuracy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="agent_design" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/diagnose_accuracy.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="init_models_labels" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="augment_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,7 +160,29 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/init_models_labels.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/augment_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="final_exam" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="agent_design" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/final_exam.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -149,7 +213,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="model_mnist.pth" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="model_c" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="agent_design" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,7 +226,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model_train_tools/model_c.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -195,11 +259,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test_accuracy" />
-        <item itemvalue="Python.model_mnist.pth" />
-        <item itemvalue="Python.init_models_labels" />
-        <item itemvalue="Python.diagnose_accuracy" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.test_accuracy" />
+        <item itemvalue="Python.model_c" />
+        <item itemvalue="Python.final_exam" />
+        <item itemvalue="Python.augment_data" />
       </list>
     </recent_temporary>
   </component>
@@ -250,13 +314,79 @@
       <option name="project" value="LOCAL" />
       <updated>1766679663888</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="完成任务B的分类模型部署">
+      <option name="closed" value="true" />
+      <created>1766680643140</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1766680643140</updated>
+    </task>
+    <task id="LOCAL-00006" summary="完整基本逻辑 计划测试提高计算能力">
+      <option name="closed" value="true" />
+      <created>1766690832566</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766690832566</updated>
+    </task>
+    <task id="LOCAL-00007" summary="V1">
+      <option name="closed" value="true" />
+      <created>1766691138340</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1766691138340</updated>
+    </task>
+    <task id="LOCAL-00008" summary="完成测试">
+      <option name="closed" value="true" />
+      <created>1766721870487</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766721870487</updated>
+    </task>
+    <task id="LOCAL-00009" summary="完成验收">
+      <option name="closed" value="true" />
+      <created>1766740358883</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766740358883</updated>
+    </task>
+    <task id="LOCAL-00010" summary="使用LFS 完整上传模型文件">
+      <option name="closed" value="true" />
+      <created>1766741352194</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1766741352194</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="有点一坨的调整 现在调用C模型还是有问题" />
     <MESSAGE value="现在的CNN分类效果不错" />
     <MESSAGE value="优化过的CNN" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化过的CNN" />
+    <MESSAGE value="完成任务B的分类模型部署" />
+    <MESSAGE value="完成所有分类任务" />
+    <MESSAGE value="完整基本逻辑 计划测试提高计算能力" />
+    <MESSAGE value="V1" />
+    <MESSAGE value="完成测试" />
+    <MESSAGE value="完成验收" />
+    <MESSAGE value="使用LFS 完整上传模型文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="使用LFS 完整上传模型文件" />
   </component>
 </project>

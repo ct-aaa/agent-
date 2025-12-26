@@ -1,3 +1,9 @@
 /data_cache/
 /datasets/
 
+/model_train_tools/data_cache/
+/model_train_tools/pre_train/
+/.env
+# 忽略数据缓存
+model_train_tools/data_cache/
+*.png
