@@ -5,53 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="419cb308-52b3-4e17-bd96-301434c8b4fb" name="更改" comment="使用LFS 完整上传模型文件">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/model_C_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/model_c.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/pkl_depacke.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/pre_train/model_best_TUBerlin.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model_train_tools/test_tools/test_keys.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/best_model_trained_on_TU_tested_on_C.pth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/classes_c.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/model_a.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/agent_design.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/agent_design.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/13.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/15.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/18.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/20.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_C/label.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fine_tune.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fine_tune_pro.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_train_tools/gpu_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/test_tools/gpu_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_b.pth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_train_tools/model_mnist.pth.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_train_tools/model_a_mnist.pth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_train_tools/train_enhanced.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models_备份/model_a.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models_备份/model_a_classes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_a_classes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models_备份/model_b.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models_备份/model_c.pth" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_accuracy.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_accuracy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766741352194</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="使用LFS 完整上传模型文件">
+      <option name="closed" value="true" />
+      <created>1766742336899</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766742336899</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
