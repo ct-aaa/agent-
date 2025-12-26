@@ -14,9 +14,9 @@ if __name__ == "__main__":
     # q4 = "请检查 dataset_C (简笔画) 中的所有图片，并告诉我它们的分类结果分别是什么？"
     # print(run_agent(q4))
 
-    # 问题 5: 计算总和 [cite: 79]
-    # q5 = "在 dataset_A(手写数字)中，所有图片代表的数字加起来总和是多少？"
-    # print(run_agent(q5))
+    # 问题 5: 计算总和 [cite:100]
+    q5 = "在 dataset_A(手写数字)中，所有图片代表的数字加起来总和是多少？"
+    print(run_agent(q5))
 
     # q6 = "请从 dataset_A画中找出一张代表数字‘7’的图片,并在dataset_B中找到一张马的图片，将他们一同展示。"
     # print(run_agent(q6))
